@@ -1,9 +1,9 @@
-apiVersion: dolphins-devops!
+apiVersion: dolphins-devops1
 kind: Deployment
 metadata:
   name: hello-world
 spec:
-  replicas: 1 
+  replicas: 2
   template:
     metadata:
       labels:
