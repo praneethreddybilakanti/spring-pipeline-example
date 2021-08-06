@@ -1,30 +1,36 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world
+ name: helloworld
+ labels:
+  app: helloworld
 spec:
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: hello-world
-    spec:
-      containers:
-      - name: hello-world-pod
-        image: praneethbilakanti/helloworld:latest
-        ports: 
-        - containerPort: 9090
+ replicas: 1
+ selector:
+  matchLabels:
+   app: helloworld
+ template:
+  metadata: 
+   labels:
+    app: helloworld
+  spec:
+   containers:
+   - name: helloworld
+     image: praneethbilakanti/helloworld:tagversion
+     ports:
+     - containerPort: 8080
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-service
+  name: helloworld
 spec:
-  selector:
-    app: hello-world
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 9090
   type: LoadBalancer
+  selector:
+    app: helloworld
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
